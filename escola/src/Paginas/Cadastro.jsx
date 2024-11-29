@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import axios from 'axios';
 
 export default function Cadastro()
 {
@@ -9,10 +9,22 @@ export default function Cadastro()
     const [estado, setEstado] = useState(''); 
     const [resultado, setResultado] = useState(null);    
 
-    function cadastrarAluno(){
+    async function cadastarAluno(e)
+    {
+        try 
+        {
+            await axios.post('http://localhost:3001/alunos', { nome, cidade, estado });
 
+            setResultado("Aluno " + nome + " cadastrado com sucesso!");
+            setNome("");
+            setCidade("");
+            setEstado("");
+        } 
+        catch (error) 
+        {
+            setResultado(error);
+        }
     }
-
 
     return (
         <div>            
@@ -45,7 +57,7 @@ export default function Cadastro()
 
                 <p>
                     <button type='button' className='botao' 
-                    onClick={cadastrarAluno}>Cadastrar</button>
+                    onClick={cadastarAluno}>Cadastrar</button>
                 </p>
 
                 <p className="mensagem">
